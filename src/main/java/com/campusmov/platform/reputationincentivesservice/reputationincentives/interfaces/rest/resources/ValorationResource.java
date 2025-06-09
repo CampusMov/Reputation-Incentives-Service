@@ -1,12 +1,16 @@
 package com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.resources;
 
 public record ValorationResource(
+        String id,
         String userId,
         String senderId,
         String reputationScore,
         String message
 ) {
     public ValorationResource {
+        if (id == null || id.isBlank()) {
+            throw new IllegalArgumentException("id is required");
+        }
         if (userId == null || userId.isBlank()) {
             throw new IllegalArgumentException("userId is required");
         }
