@@ -1,4 +1,4 @@
-package com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest;
+package com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.controllers;
 
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.services.ValorationCommandService;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.resources.CreateValorationResource;
