@@ -6,6 +6,7 @@ import com.campusmov.platform.reputationincentivesservice.reputationincentives.i
 public class ValorationResourceFromEntityAssembler {
     public static ValorationResource toResourceFromEntity(Valoration valoration) {
         return new ValorationResource(
+                valoration.getId(),
                 valoration.getUserId(),
                 valoration.getSenderId(),
                 valoration.getReputationScore(),

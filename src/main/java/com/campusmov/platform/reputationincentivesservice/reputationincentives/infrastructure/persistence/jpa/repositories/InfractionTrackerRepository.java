@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface InfractionTrackerRepository extends JpaRepository<InfractionTracker,Integer> {
+public interface InfractionTrackerRepository extends JpaRepository<InfractionTracker,String> {
     boolean existsByUserIdAndInfractionType(String userId, InfractionType infractionType);
     Optional<InfractionTracker> findByUserIdAndInfractionType(String userId, InfractionType infractionType);
 }
