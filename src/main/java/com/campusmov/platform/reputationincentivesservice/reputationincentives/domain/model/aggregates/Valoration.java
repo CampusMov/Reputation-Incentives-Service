@@ -1,6 +1,7 @@
 package com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.aggregates;
 
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.commands.CreateValorationCommand;
+import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.events.ValorationCreatedEvent;
 import com.campusmov.platform.reputationincentivesservice.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +20,7 @@ public class Valoration extends AuditableAbstractAggregateRoot<Valoration> {
     private String senderId;
 
     @NotBlank
-    private String reputationScore;
+    private Integer reputationScore;
 
     @NotBlank
     private String Message;
@@ -34,4 +35,17 @@ public class Valoration extends AuditableAbstractAggregateRoot<Valoration> {
         this.reputationScore = createValorationCommand.reputationScore();
         this.Message = createValorationCommand.message();
     }
+
+    public void sendValorationCreatedEvent() {
+        ValorationCreatedEvent event = new ValorationCreatedEvent(
+                this,
+                this.getId(),
+                this.userId,
+                this.senderId,
+                this.reputationScore,
+                this.Message
+        );
+        registerEvent(event);
+    }
+
 }

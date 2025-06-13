@@ -4,7 +4,7 @@ public record ValorationResource(
         String id,
         String userId,
         String senderId,
-        String reputationScore,
+        Integer reputationScore,
         String message
 ) {
     public ValorationResource {
@@ -17,8 +17,8 @@ public record ValorationResource(
         if (senderId == null || senderId.isBlank()) {
             throw new IllegalArgumentException("senderId is required");
         }
-        if (reputationScore == null || reputationScore.isBlank()) {
-            throw new IllegalArgumentException("reputationScore is required");
+        if (reputationScore == null || reputationScore < 0) {
+            throw new IllegalArgumentException("reputationScore must be a non-negative integer");
         }
         if (message == null || message.isBlank()) {
             throw new IllegalArgumentException("message is required");
