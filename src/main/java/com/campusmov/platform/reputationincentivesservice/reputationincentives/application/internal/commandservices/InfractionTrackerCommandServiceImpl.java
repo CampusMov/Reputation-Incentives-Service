@@ -2,6 +2,7 @@ package com.campusmov.platform.reputationincentivesservice.reputationincentives.
 
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.aggregates.InfractionTracker;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.commands.CreateInfractionTrackerCommand;
+import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.entities.Penalty;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.services.InfractionTrackerCommandService;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.infrastructure.persistence.jpa.repositories.InfractionTrackerRepository;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class InfractionTrackerCommandServiceImpl implements InfractionTrackerCom
             var newInfractionTracker = infractionTrackerRepository.findByUserIdAndInfractionType(infractionTracker.getUserId(), infractionTracker.getInfractionType());
             infractionTracker = newInfractionTracker.get();
             infractionTracker.incrementCounter();
+            //(Penalty::new) es igual a (penaltyCommand -> new Penalty(penaltyCommand));
+            infractionTracker.validatePenalty().ifPresent(Penalty::new);
+
         }
 
         infractionTrackerRepository.save(infractionTracker);
