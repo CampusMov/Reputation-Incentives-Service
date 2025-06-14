@@ -48,7 +48,7 @@ public class InfractionController {
     })
     public boolean resetInfractionTracker(@RequestBody CreateInfractionTrackerResource createInfractionTrackerResource) {
         var command = CreateInfractionTrackerCommandFromResourceAssembler.toCommandFromResource(createInfractionTrackerResource);
-        var infractionTracker = infractionTrackerCommandService.handle(command);
+        var infractionTracker = infractionTrackerCommandService.handleReset(command);
         return infractionTracker.isPresent();
     }
 
