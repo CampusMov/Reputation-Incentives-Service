@@ -2,7 +2,7 @@ package com.campusmov.platform.reputationincentivesservice.reputationincentives.
 
 public enum PenaltyStatus {
     ACTIVE,
-    DISMISSED,
+    CANCELLED,
     EXPIRED,
-    COMPLETED
+    RECEIVED
 }
