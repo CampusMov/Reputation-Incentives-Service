@@ -20,7 +20,7 @@ public class Valoration extends AuditableAbstractAggregateRoot<Valoration> {
     private String senderId;
 
     @NotBlank
-    private Integer reputationScore;
+    private Double reputationScore;
 
     @NotBlank
     private String Message;

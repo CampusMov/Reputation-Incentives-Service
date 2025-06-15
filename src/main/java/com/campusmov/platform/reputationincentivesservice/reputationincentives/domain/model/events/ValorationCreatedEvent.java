@@ -9,11 +9,11 @@ public class ValorationCreatedEvent extends ApplicationEvent implements DomainEv
     private final String valorationId;
     private final String userId;
     private final String senderId;
-    private final Integer reputationScore;
+    private final Double reputationScore;
     private final String message;
 
 
-    public ValorationCreatedEvent(Object source, String valorationId, String userId, String senderId,Integer reputationScore, String message) {
+    public ValorationCreatedEvent(Object source, String valorationId, String userId, String senderId,Double reputationScore, String message) {
         super(source);
         this.valorationId = valorationId;
         this.userId = userId;
