@@ -5,6 +5,7 @@ import com.campusmov.platform.reputationincentivesservice.reputationincentives.d
 import com.campusmov.platform.reputationincentivesservice.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,7 @@ public class Valoration extends AuditableAbstractAggregateRoot<Valoration> {
     @NotBlank
     private String senderId;
 
-    @NotBlank
+    @NotNull
     private Double reputationScore;
 
     @NotBlank
