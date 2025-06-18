@@ -10,7 +10,8 @@ public class ValorationResourceFromEntityAssembler {
                 valoration.getUserId(),
                 valoration.getSenderId(),
                 valoration.getReputationScore(),
-                valoration.getMessage()
+                valoration.getMessage(),
+                valoration.getCreatedAt()
         );
     }
 }

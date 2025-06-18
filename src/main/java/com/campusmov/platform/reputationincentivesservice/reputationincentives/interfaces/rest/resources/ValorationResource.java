@@ -1,11 +1,14 @@
 package com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.resources;
 
+import java.util.Date;
+
 public record ValorationResource(
         String id,
         String userId,
         String senderId,
-        Integer reputationScore,
-        String message
+        Double reputationScore,
+        String message,
+        Date timestamp
 ) {
     public ValorationResource {
         if (id == null || id.isBlank()) {
@@ -17,11 +20,15 @@ public record ValorationResource(
         if (senderId == null || senderId.isBlank()) {
             throw new IllegalArgumentException("senderId is required");
         }
-        if (reputationScore == null || reputationScore < 0) {
-            throw new IllegalArgumentException("reputationScore must be a non-negative integer");
+        if (reputationScore == null || reputationScore < 0.0) {
+            throw new IllegalArgumentException("reputationScore must be a non-negative number");
         }
+
         if (message == null || message.isBlank()) {
             throw new IllegalArgumentException("message is required");
+        }
+        if (timestamp == null) {
+            throw new IllegalArgumentException("timestamp is required");
         }
     }
 }
