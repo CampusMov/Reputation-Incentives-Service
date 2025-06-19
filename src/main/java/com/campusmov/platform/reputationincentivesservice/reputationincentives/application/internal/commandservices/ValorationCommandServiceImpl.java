@@ -22,6 +22,8 @@ public class ValorationCommandServiceImpl implements ValorationCommandService {
 
         var valoration = new Valoration(createValorationCommand);
         valorationRepository.save(valoration);
+        valoration.sendValorationCreatedEvent();
+        valorationRepository.save(valoration);
         return Optional.of(valoration);
     }
 }

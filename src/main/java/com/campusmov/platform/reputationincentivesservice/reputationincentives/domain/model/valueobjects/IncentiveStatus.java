@@ -1,8 +1,7 @@
 package com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.valueobjects;
 
-public enum PenaltyStatus {
+public enum IncentiveStatus {
     ACTIVE,
-    CANCELLED,
-    EXPIRED,
-    RECEIVED
+    REDEEMED,
+    EXPIRED
 }

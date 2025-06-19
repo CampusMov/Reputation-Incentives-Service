@@ -25,7 +25,7 @@ public class Penalty extends AuditableAbstractAggregateRoot<Penalty> {
         this.userId = createPenaltyCommand.userId();
         this.type = typeFromStringToEnum(createPenaltyCommand.type());
         this.status = statusFromStringToEnum(createPenaltyCommand.status());
-        this.description = createPenaltyCommand.description();
+        this.description = buildDescription(createPenaltyCommand.infractionType());
 
     }
 
@@ -34,6 +34,20 @@ public class Penalty extends AuditableAbstractAggregateRoot<Penalty> {
     }
     public PenaltyStatus statusFromStringToEnum(String penaltyStatus) {
         return PenaltyStatus.valueOf(penaltyStatus.toUpperCase());
+    }
+
+    public String buildDescription(String infractionType) {
+        if (infractionType.equals("LATE_CANCELLATION") ) {
+            return "Late cancellation penalty applied. Please be aware of the cancellation policy.";
+        } else if (infractionType.equals("REJECTED_PASSENGER")) {
+            return "Penalty for rejecting a passenger. Ensure to follow the platform's guidelines.";
+        } else if (infractionType.equals("LATE_COMMISSION_PAYMENT")) {
+            return "Late commission payment penalty. Please ensure timely payments in the future.";
+        } else if (infractionType.equals("SLOW_DRIVER")) {
+            return "Penalty for slow driving. Please maintain a reasonable speed to ensure safety.";
+        } else {
+            return "Penalty applied for an unspecified infraction.";
+        }
     }
 
 

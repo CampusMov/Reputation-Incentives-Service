@@ -3,7 +3,7 @@ package com.campusmov.platform.reputationincentivesservice.reputationincentives.
 public record CreateValorationCommand(
         String userId,
         String senderId,
-        String reputationScore,
+        Double reputationScore,
         String message
 ) {
     public CreateValorationCommand {
@@ -13,8 +13,8 @@ public record CreateValorationCommand(
         if (senderId == null || senderId.isBlank()) {
             throw new IllegalArgumentException("senderId is required");
         }
-        if (reputationScore == null || reputationScore.isBlank()) {
-            throw new IllegalArgumentException("reputationScore is required");
+        if (reputationScore == null || reputationScore < 0.0 || reputationScore > 5.0) {
+            throw new IllegalArgumentException("Reputation score must be between 0.0 and 5.0");
         }
         if (message == null || message.isBlank()) {
             throw new IllegalArgumentException("message is required");

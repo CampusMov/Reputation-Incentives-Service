@@ -4,14 +4,14 @@ public record CreatePenaltyCommand(
         String userId,
         String type,
         String status,
-        String description
+        String infractionType
 ) {
     public CreatePenaltyCommand {
         if (userId == null || userId.isBlank()) {
             throw new IllegalArgumentException("userId is required");
         }
-        if (description == null || description.isBlank()) {
-            throw new IllegalArgumentException("description is required");
+        if (infractionType == null || infractionType.isBlank()) {
+            throw new IllegalArgumentException("infractionType is required");
         }
         if (type == null || type.isBlank()) {
             throw new IllegalArgumentException("type is required");

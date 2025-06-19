@@ -1,6 +1,8 @@
 package com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.controllers;
 
+import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.queries.GetAllValorationsByUserIdQuery;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.services.ValorationCommandService;
+import com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.services.ValorationQueryService;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.resources.CreateValorationResource;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.resources.ValorationResource;
 import com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.transform.CreateValorationCommandFromResourceAssembler;
@@ -10,19 +12,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/reputation-incentives/valorations")
 @Tag(name = "valoration", description = "Valoration Management Endpoints")
 public class ValorationController {
     private final ValorationCommandService valorationCommandService;
+    private final ValorationQueryService valorationQueryService;
 
-    public ValorationController(ValorationCommandService valorationCommandService) {
+    public ValorationController(ValorationCommandService valorationCommandService, ValorationQueryService valorationQueryService) {
         this.valorationCommandService = valorationCommandService;
+        this.valorationQueryService = valorationQueryService;
     }
 
     @PostMapping("")
@@ -37,4 +40,21 @@ public class ValorationController {
         var valorationResource = ValorationResourceFromEntityAssembler.toResourceFromEntity(valoration.get());
         return ResponseEntity.ok(valorationResource);
     }
+
+    @GetMapping("{userId}")
+    @Operation(summary = "get valorations by user", description = "Retrieves valorations for a specific user", operationId = "get-valorations-by-user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Valorations retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    public ResponseEntity<Collection<ValorationResource>> getAllValorationsByUserId(@PathVariable String userId) {
+        var query = new GetAllValorationsByUserIdQuery(userId);
+        var valorations = valorationQueryService.handle(query);
+        var valorationResources = valorations.stream()
+                .map(ValorationResourceFromEntityAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(valorationResources);
+    }
+
+
 }
