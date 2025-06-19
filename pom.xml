@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.campusmov.platform</groupId>
-	<artifactId>Reputation-Incentives-Service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>reputation-incentives-service</artifactId>
+    <version>1.0.0</version>
 	<name>Reputation-Incentives-Service</name>
 	<description>Reputation-Incentives-Service</description>
 	<url/>
@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>21</java.version>
         <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <dockerPassword>dockerPassword</dockerPassword>
     </properties>
 
     <dependencyManagement>
@@ -135,19 +136,6 @@
 
 	<build>
 		<plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -158,6 +146,21 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <image>
+                        <builder>paketobuildpacks/builder-jammy-java-tiny:latest</builder>
+                        <name>jhosepmyr/uni-ride_${project.artifactId}:${project.version}</name>
+                        <publish>true</publish>
+                        <env>
+                            <BP_JVM_VERSION>21</BP_JVM_VERSION>
+                            <BP_JVM_TYPE>JDK</BP_JVM_TYPE>
+                        </env>
+                    </image>
+                    <docker>
+                        <publishRegistry>
+                            <username>jhosepmyr</username>
+                            <password>${dockerPassword}</password>
+                        </publishRegistry>
+                    </docker>
                 </configuration>
             </plugin>
 
