@@ -1,0 +1,23 @@
+package com.campusmov.platform.reputationincentivesservice.reputationincentives.domain.model.commands;
+
+public record CreateValorationCommand(
+        String userId,
+        String senderId,
+        Double reputationScore,
+        String message
+) {
+    public CreateValorationCommand {
+        if (userId == null || userId.isBlank()) {
+            throw new IllegalArgumentException("userId is required");
+        }
+        if (senderId == null || senderId.isBlank()) {
+            throw new IllegalArgumentException("senderId is required");
+        }
+        if (reputationScore == null || reputationScore < 0.0 || reputationScore > 5.0) {
+            throw new IllegalArgumentException("Reputation score must be between 0.0 and 5.0");
+        }
+        if (message == null || message.isBlank()) {
+            throw new IllegalArgumentException("message is required");
+        }
+    }
+}

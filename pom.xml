@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.0</version>
+		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.campusmov.platform</groupId>
-	<artifactId>Reputation-Incentives-Service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>reputation-incentives-service</artifactId>
+    <version>1.0.0</version>
 	<name>Reputation-Incentives-Service</name>
 	<description>Reputation-Incentives-Service</description>
 	<url/>
@@ -28,7 +28,22 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-	</properties>
+        <spring-cloud.version>2024.0.1</spring-cloud.version>
+        <dockerPassword>dockerPassword</dockerPassword>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 	<dependencies>
 
         <dependency>
@@ -99,23 +114,28 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-test-binder</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 	</dependencies>
 
 	<build>
 		<plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -126,6 +146,21 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <image>
+                        <builder>paketobuildpacks/builder-jammy-java-tiny:latest</builder>
+                        <name>jhosepmyr/uni-ride_${project.artifactId}:${project.version}</name>
+                        <publish>true</publish>
+                        <env>
+                            <BP_JVM_VERSION>21</BP_JVM_VERSION>
+                            <BP_JVM_TYPE>JDK</BP_JVM_TYPE>
+                        </env>
+                    </image>
+                    <docker>
+                        <publishRegistry>
+                            <username>jhosepmyr</username>
+                            <password>${dockerPassword}</password>
+                        </publishRegistry>
+                    </docker>
                 </configuration>
             </plugin>
 
