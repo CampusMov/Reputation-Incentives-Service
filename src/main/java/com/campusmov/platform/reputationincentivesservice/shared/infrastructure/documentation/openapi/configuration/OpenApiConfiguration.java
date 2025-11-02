@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfiguration {
+    // TODO: Change OpenApi name method
     @Bean
     public OpenAPI learningPlatformOpenApi() {
         var openApi = new OpenAPI();

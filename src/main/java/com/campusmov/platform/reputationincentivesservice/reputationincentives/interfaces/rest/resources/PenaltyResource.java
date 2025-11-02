@@ -1,11 +1,14 @@
 package com.campusmov.platform.reputationincentivesservice.reputationincentives.interfaces.rest.resources;
 
+import java.util.Date;
+
 public record PenaltyResource(
         String id,
         String userId,
         String type,
         String status,
-        String description
+        String description,
+        Date timestamp
 ) {
     public PenaltyResource {
         if (id == null || id.isBlank()) {
@@ -22,6 +25,9 @@ public record PenaltyResource(
         }
         if (description == null || description.isBlank()) {
             throw new IllegalArgumentException("description is required");
+        }
+        if (timestamp == null) {
+            throw new IllegalArgumentException("timestamp is required");
         }
     }
 }

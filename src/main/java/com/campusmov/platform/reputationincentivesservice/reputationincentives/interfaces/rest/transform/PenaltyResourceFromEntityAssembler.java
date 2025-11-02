@@ -10,7 +10,8 @@ public class PenaltyResourceFromEntityAssembler {
                 penalty.getUserId(),
                 penalty.getType().name(),
                 penalty.getStatus().name(),
-                penalty.getDescription()
+                penalty.getDescription(),
+                penalty.getCreatedAt()
         );
     }
 }
